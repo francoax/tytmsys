@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TyTManagmentSystem.Models;
 
 namespace TyTManagmentSystem.DataAccess
 {
@@ -10,5 +11,11 @@ namespace TyTManagmentSystem.DataAccess
     {
       base.OnModelCreating(modelBuilder);
     }
+
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<Item> Items { get; set; }
+    public DbSet<Price> Prices { get; set; }
+    public DbSet<Inventory> Inventorys { get; set; }
+    public DbSet<Supplier> Suppliers { get; set; }
   }
 }
