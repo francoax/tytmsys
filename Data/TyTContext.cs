@@ -37,6 +37,11 @@ namespace TyTManagmentSystem.DataAccess
                 .WithOne(sm => sm.Item)
                 .HasForeignKey(sm => sm.ItemId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<StockMovements>()
+                .Property(sm => sm.State)
+                .HasDefaultValue(MovementState.Pending)
+                .HasConversion<string>();
     }
 
     public DbSet<Category> Categories { get; set; }

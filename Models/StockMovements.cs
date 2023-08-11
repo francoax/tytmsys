@@ -10,5 +10,12 @@
     public int RealAmountUsed { get; set; }
     public decimal TotalPrice { get; set; }
     public decimal Dollar_at_Date { get; set; }
+    public MovementState State { get; set; }
   }
+
+  public enum MovementState
+    {
+        Pending,
+        Confirmed
+    }
 }
