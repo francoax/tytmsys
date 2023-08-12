@@ -15,33 +15,35 @@ namespace Api.Services.GenericService
             entitySet = context.Set<TEntity>();
         }
 
-        public TEntity? Get(int id)
+        public async Task<TEntity> Add(TEntity entity)
         {
-            return entitySet.Where(e => e.Id == id).FirstOrDefault();
+            var entityNew = await entitySet.AddAsync(entity);
+            return entityNew.Entity;
         }
 
-        public ICollection<TEntity> GetAll()
+        public async Task<TEntity?> Delete(int id)
         {
-            return entitySet.ToList();
+            var entityToDelete = await entitySet.FirstOrDefaultAsync(e => e.Id == id);
+            if(entityToDelete != null)
+            {
+                return entitySet.Remove(entityToDelete).Entity;
+            }
+            return null;
         }
 
-        public TEntity Add(TEntity entity)
+        public async Task<TEntity?> Get(int id)
         {
-            return entitySet.Add(entity).Entity;
+            return await entitySet.FirstOrDefaultAsync(e => e.Id == id);            
+        }
+
+        public async Task<ICollection<TEntity>> GetAll()
+        {
+            return await entitySet.ToListAsync();
         }
 
         public TEntity Update(TEntity entity)
         {
             return entitySet.Update(entity).Entity;
-        }
-
-        public TEntity Delete(int id)
-        {
-            var entity = entitySet.FirstOrDefault(e => e.Id == id);
-            if(entity != null) 
-            {
-                entitySet.Remove(entity);
-            }
         }
     }
 }
