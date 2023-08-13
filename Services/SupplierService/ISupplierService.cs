@@ -5,5 +5,6 @@ namespace Api.Services.SupplierService
 {
   public interface ISupplierService : IGenericService<Supplier>
   {
+    ICollection<Item> GetItems();
   }
 }

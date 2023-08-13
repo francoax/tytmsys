@@ -5,5 +5,6 @@ namespace Api.Services.CategoryService
 {
     public interface ICategoryService : IGenericService<Category>
     {
+      ICollection<Item> GetItems();
     }
 }
