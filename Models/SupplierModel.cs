@@ -1,12 +1,12 @@
-﻿namespace TyTManagmentSystem.Models
+﻿namespace Api.Models
 {
-  public class Supplier : ModelBase
+  public class SupplierModel : BaseModel
   {
     public string Name { get; set; }
     public string CUIT { get; set; }
     public Address Address { get; set; }
     public Contact Contact { get; set; }
-    public ICollection<Item> Items { get; set; }
+    public IList<ItemModel> Items { get; set; }
   }
 
   public class Address

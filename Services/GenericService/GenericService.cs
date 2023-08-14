@@ -1,17 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TyTManagmentSystem.DataAccess;
-using TyTManagmentSystem.Models;
+﻿using Api.Data;
+using Microsoft.EntityFrameworkCore;
+using Api.Models;
 
 namespace Api.Services.GenericService
 {
-    public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : ModelBase
+    public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : BaseModel
     {
-        protected TyTContext _context;
+        protected TyTContext context;
         internal DbSet<TEntity> entitySet;
 
-        public GenericService( TyTContext context )
+        public GenericService(TyTContext context)
         {
-            _context = context;
+            this.context = context;
             entitySet = context.Set<TEntity>();
         }
 
@@ -31,12 +31,12 @@ namespace Api.Services.GenericService
             return null;
         }
 
-        public async Task<TEntity?> Get(int id)
+        public virtual async Task<TEntity?> Get(int id)
         {
             return await entitySet.FirstOrDefaultAsync(e => e.Id == id);            
         }
 
-        public async Task<ICollection<TEntity>> GetAll()
+        public virtual async Task<List<TEntity>> GetAll()
         {
             return await entitySet.ToListAsync();
         }

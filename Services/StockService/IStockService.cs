@@ -1,12 +1,12 @@
 ﻿using Api.Services.GenericService;
-using TyTManagmentSystem.Models;
+using Api.Models;
 
 namespace Api.Services.StockService
 {
-  public interface IStockService : IGenericService<StockMovements>
+  public interface IStockService : IGenericService<StockMovementsModel>
   {
     int GetActualStock(int id);
-    ICollection<StockMovements> GetStockMovementsOnPending();
-    ICollection<StockMovements> GetStockMovementsOnPending(int id);
+    ICollection<StockMovementsModel> GetStockMovementsOnPending();
+    ICollection<StockMovementsModel> GetStockMovementsOnPending(int id);
   }
 }

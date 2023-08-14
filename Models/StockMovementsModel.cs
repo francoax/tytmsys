@@ -1,9 +1,9 @@
-﻿namespace TyTManagmentSystem.Models
+﻿namespace Api.Models
 {
-  public class StockMovements : ModelBase
+  public class StockMovementsModel : BaseModel
   {
     public int ItemId { get; set; }
-    public Item Item { get; set; }
+    public ItemModel Item { get; set; }
     public string ActionType { get; set; }
     public int Amount { get; set; }
     public DateTime DateOfAction { get; set; }

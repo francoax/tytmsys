@@ -1,10 +1,10 @@
 ﻿using Api.Services.GenericService;
-using TyTManagmentSystem.Models;
+using Api.Models;
 
 namespace Api.Services.SupplierService
 {
-  public interface ISupplierService : IGenericService<Supplier>
+  public interface ISupplierService : IGenericService<SupplierModel>
   {
-    ICollection<Item> GetItems();
+    ICollection<ItemModel> GetItems();
   }
 }

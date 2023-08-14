@@ -1,6 +1,6 @@
+using Api.Data;
 using Microsoft.EntityFrameworkCore;
-using TyTManagmentSystem;
-using TyTManagmentSystem.DataAccess;
+using TyTManagementSystem;
 
 var builder = WebApplication.CreateBuilder(args);
 
