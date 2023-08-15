@@ -3,9 +3,7 @@ using Api.Models;
 
 namespace Api.Services.CategoryService
 {
-    public interface ICategoryService : IGenericService<CategoryModel>
+    public interface ICategoryService : IGenericService<Category>
     {
-      List<ItemModel>? GetItemsForCategory(int id);
-      List<CategoryModel> GetCategoriesWithItems();
     }
 }

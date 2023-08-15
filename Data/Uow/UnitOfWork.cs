@@ -1,6 +1,5 @@
 ﻿using Api.Services.CategoryService;
 using Api.Services.ItemService;
-using Api.Services.StockService;
 using Api.Services.SupplierService;
 
 namespace Api.Data.Uow
@@ -11,7 +10,6 @@ namespace Api.Data.Uow
     public ICategoryService CategoryService { get; private set; }
     public IItemService ItemService { get; private set; }
     public ISupplierService SupplierService { get; private set; }
-    public IStockService StockService { get; private set; }
 
     public UnitOfWork(TyTContext context)
     {
@@ -19,7 +17,6 @@ namespace Api.Data.Uow
       CategoryService = new CategoryService(context);
       ItemService = new ItemService(context);
       SupplierService = new SupplierService(context);
-      StockService = new StockService(context);
     }
     public async Task SaveAsync()
     {

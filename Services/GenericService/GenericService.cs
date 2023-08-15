@@ -4,7 +4,7 @@ using Api.Models;
 
 namespace Api.Services.GenericService
 {
-    public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : BaseModel
+    public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : ModelBase
     {
         protected TyTContext context;
         internal DbSet<TEntity> entitySet;
@@ -29,16 +29,6 @@ namespace Api.Services.GenericService
                 return entitySet.Remove(entityToDelete).Entity;
             }
             return null;
-        }
-
-        public virtual async Task<TEntity?> Get(int id)
-        {
-            return await entitySet.FirstOrDefaultAsync(e => e.Id == id);            
-        }
-
-        public virtual async Task<List<TEntity>> GetAll()
-        {
-            return await entitySet.ToListAsync();
         }
 
         public TEntity Update(TEntity entity)

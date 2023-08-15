@@ -3,8 +3,7 @@ using Api.Models;
 
 namespace Api.Services.SupplierService
 {
-  public interface ISupplierService : IGenericService<SupplierModel>
+  public interface ISupplierService : IGenericService<Supplier>
   {
-    ICollection<ItemModel> GetItems();
   }
 }

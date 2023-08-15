@@ -1,6 +1,6 @@
 ﻿namespace Api.Models
 {
-  public class BaseModel
+  public class ModelBase
   {
     public int Id { get; set; }
   }
