@@ -4,36 +4,23 @@ using Api.Models;
 
 namespace Api.Services.GenericService
 {
-    public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : ModelBase
+  public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : ModelBase
+  {
+    protected TyTContext context;
+    internal DbSet<TEntity> entitySet;
+
+    public GenericService(TyTContext context)
     {
-        protected TyTContext context;
-        internal DbSet<TEntity> entitySet;
-
-        public GenericService(TyTContext context)
-        {
-            this.context = context;
-            entitySet = context.Set<TEntity>();
-        }
-
-        public async Task<TEntity> Add(TEntity entity)
-        {
-            var entityNew = await entitySet.AddAsync(entity);
-            return entityNew.Entity;
-        }
-
-        public async Task<TEntity?> Delete(int id)
-        {
-            var entityToDelete = await entitySet.FirstOrDefaultAsync(e => e.Id == id);
-            if(entityToDelete != null)
-            {
-                return entitySet.Remove(entityToDelete).Entity;
-            }
-            return null;
-        }
-
-        public TEntity Update(TEntity entity)
-        {
-            return entitySet.Update(entity).Entity;
-        }
+        this.context = context;
+        entitySet = context.Set<TEntity>();
     }
+
+    public TEntity Add(TEntity entity) => entitySet.Add(entity).Entity;
+
+    public void AddMany(TEntity[] entities) => entitySet.AddRange(entities);
+
+    public async Task<int> Delete(int id) => await entitySet.Where(e => e.Id == id).ExecuteDeleteAsync();
+
+    public TEntity Update(TEntity entity) => entitySet.Update(entity).Entity;
+  }
 }

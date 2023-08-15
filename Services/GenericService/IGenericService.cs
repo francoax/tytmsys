@@ -2,10 +2,11 @@
 
 namespace Api.Services.GenericService
 {
-    public interface IGenericService<TEntity> where TEntity : ModelBase 
-    {
-        Task<TEntity> Add(TEntity entity);
-        TEntity Update(TEntity entity);
-        Task<TEntity?> Delete(int id);
-    }
+  public interface IGenericService<TEntity> where TEntity : ModelBase
+  {
+    TEntity Add(TEntity entity);
+    void AddMany(TEntity[] entities);
+    TEntity Update(TEntity entity);
+    Task<int> Delete(int id);
+  }
 }
