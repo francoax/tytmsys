@@ -4,11 +4,11 @@ using AutoMapper;
 
 namespace Api.Utils.Profiles
 {
-  public class ItemProfile : Profile
+  public class UnitProfile : Profile
   {
-    public ItemProfile()
+    public UnitProfile() 
     {
-      CreateMap<ItemForCreationDto, Item>();
+      CreateMap<UnitForCreationDto, Unit>();
     }
   }
 }

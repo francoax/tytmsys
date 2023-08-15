@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers
 {
   [ApiController]
-  [Route("/api/items")]
-  public class ItemsController : ControllerBase
+  [Route("/api/suppliers")]
+  public class SuppliersController : ControllerBase
   {
     private readonly IUnitOfWork uow;
     private readonly IMapper mapper;
 
-    public ItemsController(IUnitOfWork uow, IMapper mapper)
+    public SuppliersController(IUnitOfWork uow, IMapper mapper)
     {
       this.uow = uow;
       this.mapper = mapper;
