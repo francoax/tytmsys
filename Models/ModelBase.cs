@@ -1,4 +1,4 @@
-﻿namespace TyTManagmentSystem.Models
+﻿namespace Api.Models
 {
   public class ModelBase
   {

@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Api.Data.Uow;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
-using TyTManagmentSystem.Data.Uow;
-using TyTManagmentSystem.DataAccess;
 
-namespace TyTManagmentSystem
+namespace TyTManagementSystem
 {
   public static class ServicesExtensions
   {

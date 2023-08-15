@@ -1,9 +1,8 @@
-﻿namespace TyTManagmentSystem.Models
+﻿namespace Api.Models
 {
   public class Category : ModelBase
   {
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public ICollection<Item> Items { get; set; }
+    public string Name { get; set; } = null!;
+    public List<Item> Items { get; set; } = new List<Item>();
   }
 }

@@ -1,24 +1,18 @@
-﻿namespace TyTManagmentSystem.Models
+﻿namespace Api.Models
 {
   public class Supplier : ModelBase
   {
-    public string Name { get; set; }
-    public string CUIT { get; set; }
-    public Address Address { get; set; }
-    public Contact Contact { get; set; }
-    public ICollection<Item> Items { get; set; }
+    public string Name { get; set; } = null!;
+    public string? Phone { get; set; }
+    public string? Email { get; set; }
+    public Direction? Direction { get; set; }
+    public List<ItemSupplier> ItemsSuppliers { get; set; } = new List<ItemSupplier>();
   }
 
-  public class Address
+  public class Direction
   {
-    public string Street { get; set; }
-    public int StreetNumber { get; set; }
-    public string City { get; set; }
-  }
-
-  public class Contact
-  {
-    public string Phone { get; set; }
-    public string Email { get; set; }
+    public string Street { get; set; } = null!;
+    public string City { get; set; } = null!;
+    public string StreetNumber { get; set; } = null!;
   }
 }

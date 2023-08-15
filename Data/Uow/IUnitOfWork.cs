@@ -1,6 +1,7 @@
-﻿namespace TyTManagmentSystem.Data.Uow
+﻿namespace Api.Data.Uow
 {
-  public interface IUnitOfWork
-  {
-  }
+    public interface IUnitOfWork
+    {
+      Task SaveAsync();
+    }
 }

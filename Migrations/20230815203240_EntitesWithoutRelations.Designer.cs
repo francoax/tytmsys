@@ -4,6 +4,7 @@ using Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(TyTContext))]
-    partial class TyTContextModelSnapshot : ModelSnapshot
+    [Migration("20230815203240_EntitesWithoutRelations")]
+    partial class EntitesWithoutRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,39 +51,14 @@ namespace Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<int>("UnitId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("UnitId");
-
                     b.ToTable("Items");
-                });
-
-            modelBuilder.Entity("Api.Models.ItemSupplier", b =>
-                {
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SupplierId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ItemId", "SupplierId");
-
-                    b.HasIndex("SupplierId");
-
-                    b.ToTable("ItemsSuppliers");
                 });
 
             modelBuilder.Entity("Api.Models.StockMovement", b =>
@@ -106,9 +84,6 @@ namespace Api.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
-
                     b.Property<int>("RealAmountUsed")
                         .HasColumnType("int");
 
@@ -122,8 +97,6 @@ namespace Api.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ItemId");
 
                     b.ToTable("StockMovements");
                 });
@@ -172,55 +145,6 @@ namespace Api.Migrations
                     b.ToTable("Units");
                 });
 
-            modelBuilder.Entity("Api.Models.Item", b =>
-                {
-                    b.HasOne("Api.Models.Category", "Category")
-                        .WithMany("Items")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Api.Models.Unit", "Unit")
-                        .WithMany("Items")
-                        .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Unit");
-                });
-
-            modelBuilder.Entity("Api.Models.ItemSupplier", b =>
-                {
-                    b.HasOne("Api.Models.Item", "Item")
-                        .WithMany("ItemsSuppliers")
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Api.Models.Supplier", "Supplier")
-                        .WithMany("ItemsSuppliers")
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Item");
-
-                    b.Navigation("Supplier");
-                });
-
-            modelBuilder.Entity("Api.Models.StockMovement", b =>
-                {
-                    b.HasOne("Api.Models.Item", "Item")
-                        .WithMany("StockMovements")
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Item");
-                });
-
             modelBuilder.Entity("Api.Models.Supplier", b =>
                 {
                     b.OwnsOne("Api.Models.Direction", "Direction", b1 =>
@@ -252,28 +176,6 @@ namespace Api.Migrations
                         });
 
                     b.Navigation("Direction");
-                });
-
-            modelBuilder.Entity("Api.Models.Category", b =>
-                {
-                    b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("Api.Models.Item", b =>
-                {
-                    b.Navigation("ItemsSuppliers");
-
-                    b.Navigation("StockMovements");
-                });
-
-            modelBuilder.Entity("Api.Models.Supplier", b =>
-                {
-                    b.Navigation("ItemsSuppliers");
-                });
-
-            modelBuilder.Entity("Api.Models.Unit", b =>
-                {
-                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }
