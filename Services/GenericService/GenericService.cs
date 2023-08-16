@@ -21,6 +21,10 @@ namespace Api.Services.GenericService
 
     public async Task<int> Delete(int id) => await entitySet.Where(e => e.Id == id).ExecuteDeleteAsync();
 
+    public virtual async Task<List<TEntity>> GetAllAsync() => await entitySet.ToListAsync();
+
+    public virtual async Task<TEntity?> GetAsync(int id) => await entitySet.Where(e => e.Id == id).FirstOrDefaultAsync();
+
     public TEntity Update(TEntity entity) => entitySet.Update(entity).Entity;
   }
 }

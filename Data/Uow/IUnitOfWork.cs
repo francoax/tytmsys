@@ -1,7 +1,10 @@
-﻿namespace Api.Data.Uow
+﻿using Api.Services.CategoriesService;
+
+namespace Api.Data.Uow
 {
     public interface IUnitOfWork
-    {
-      Task SaveAsync();
-    }
+  {
+    ICategoryService CategoriesService { get; }
+    Task SaveAsync();
+  }
 }
