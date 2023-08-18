@@ -1,5 +1,4 @@
-﻿using Api.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Api.DTOs
 {
@@ -9,6 +8,6 @@ namespace Api.DTOs
     public string Name { get; set; } = null!;
     public string? Phone { get; set; }
     public string? Email { get; set; }
-    public Direction? Direction { get; set; }
+    public DirectionDto? Direction { get; set; }
   }
 }
