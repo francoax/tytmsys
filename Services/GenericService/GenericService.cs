@@ -15,7 +15,7 @@ namespace Api.Services.GenericService
         entitySet = context.Set<TEntity>();
     }
 
-    public TEntity Add(TEntity entity) => entitySet.Add(entity).Entity;
+    public virtual TEntity Add(TEntity entity) => entitySet.Add(entity).Entity;
 
     public void AddMany(TEntity[] entities) => entitySet.AddRange(entities);
 

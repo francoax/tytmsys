@@ -1,12 +1,12 @@
 ﻿using Api.Data.Uow;
-using Api.DTOs;
+using Api.DTOs.SupplierDTOs;
 using Api.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
-  [ApiController]
+    [ApiController]
   [Route("/api/suppliers")]
   public class SuppliersController : ControllerBase
   {

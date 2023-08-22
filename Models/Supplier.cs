@@ -6,13 +6,13 @@
     public string? Phone { get; set; }
     public string? Email { get; set; }
     public Direction? Direction { get; set; }
-    public List<ItemSupplier> ItemsSuppliers { get; set; } = new List<ItemSupplier>();
+    public List<Item> Items { get; set; } = new List<Item>();
   }
 
   public class Direction
   {
-    public string? Street { get; set; } = null!;
-    public string? City { get; set; } = null!;
-    public string? StreetNumber { get; set; } = null!;
+    public string Street { get; set; } = null!;
+    public string City { get; set; } = null!;
+    public string StreetNumber { get; set; } = null!;
   }
 }

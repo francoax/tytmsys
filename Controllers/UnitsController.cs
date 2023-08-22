@@ -1,12 +1,12 @@
 ﻿using Api.Data.Uow;
-using Api.DTOs;
+using Api.DTOs.UnitDTOs;
 using Api.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
-  [ApiController]
+    [ApiController]
   [Route("/api/units")]
   public class UnitsController : ControllerBase
   {
