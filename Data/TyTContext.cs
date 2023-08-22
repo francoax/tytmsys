@@ -11,7 +11,9 @@ namespace Api.Data
     {
       base.OnModelCreating(modelBuilder);
 
+      modelBuilder.Entity<ItemActualStock>().HasNoKey();
       modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
     }
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
@@ -24,6 +26,6 @@ namespace Api.Data
     public DbSet<Category> Categories { get; set; }
     public DbSet<Unit> Units { get; set; }
     public DbSet<Supplier> Suppliers { get; set; }
-    public DbSet<ItemSupplier> ItemsSuppliers { get; set; }
+    public DbSet<ItemActualStock> ItemStock { get; set; }
   }
 }
