@@ -1,4 +1,5 @@
 ﻿using Api.Data;
+using Api.DTOs.StockMovementDTOs;
 using Api.Models;
 using Api.Services.GenericService;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +39,14 @@ namespace Api.Services.StockMovementsService
     {
       var stocks = context.StockMovements.Where(sm => sm.ItemId == id && sm.State.Equals("pendiente")).GroupBy(sm => sm.ItemId).Count();
       return stocks > 0;
+    }
+
+    public List<StockMovementDto> OrderStockMovements(List<StockMovementDto> movements)
+    {
+      return movements
+        .OrderByDescending(sm => sm.DateOfAction.Date)
+          .ThenByDescending(sm => sm.DateOfAction.TimeOfDay)
+        .ToList();
     }
   }
 }

@@ -26,7 +26,7 @@ namespace Api.Controllers
 
       var movementsDto = mapper.Map<StockMovementsDto[]>(movements);
 
-      movementsDto = movementsDto.OrderByDescending(sm => sm.DateOfAction.Date).ToArray();
+      movementsDto = movementsDto.OrderByDescending(sm => sm.DateOfAction.Date).ThenByDescending(sm => sm.DateOfAction.TimeOfDay).ToArray();
 
       return Ok(new
       {
@@ -43,7 +43,7 @@ namespace Api.Controllers
 
       var itemMovements = mapper.Map<StockMovementDto[]>(movements);
 
-      itemMovements = itemMovements.OrderByDescending(sm => sm.DateOfAction.Date).ToArray();
+      itemMovements = itemMovements.OrderByDescending(sm => sm.DateOfAction.Date).ThenByDescending(sm => sm.DateOfAction.TimeOfDay).ToArray();
 
       return Ok(new
       {
@@ -76,21 +76,21 @@ namespace Api.Controllers
     [Route("withdraw/{itemId:int}")]
     public async Task<ActionResult> CreateStockForWithdraw(int itemId, [FromBody] StockMovementForWithdraw stockWithDraw)
     {
-      var stocks = await uow.StockMovementsService.GetActualStock(itemId);
+      //var stocks = await uow.StockMovementsService.GetActualStock(itemId);
 
-      if (!stocks.Any()) return BadRequest(new
-      {
-        message = "The item does not contain movements to do a withdraw.",
-        error = true
-      });
+      //if (!stocks.Any()) return BadRequest(new
+      //{
+      //  message = "The item does not contain movements to do a withdraw.",
+      //  error = true
+      //});
 
-      var actualStock = stocks.Sum(s => s.ActualStock);
+      //var actualStock = stocks.Sum(s => s.ActualStock);
 
-      if (actualStock < stockWithDraw.Amount) return BadRequest(new
-      {
-        message = "There is not enough stock available.",
-        error = true
-      });
+      //if (actualStock < stockWithDraw.Amount) return BadRequest(new
+      //{
+      //  message = "There is not enough stock available.",
+      //  error = true
+      //});
 
       if (uow.StockMovementsService.HasPendingMovements(itemId)) return BadRequest(new
       {

@@ -25,22 +25,22 @@ namespace Api.Controllers
       var items = await uow.ItemsService.GetAllAsync();
       var itemsDto = mapper.Map<ItemDto[]>(items);
 
-      var stocks = await uow.StockMovementsService.GetActualStock();
+      //var stocks = await uow.StockMovementsService.GetActualStock();
 
-      foreach (var item in itemsDto)
-      {
-        foreach (var stock in stocks)
-        {
-          if (stock.ItemId == item.Id)
-          {
-            item.ActualStock = stock.ActualStock;
-          }
-        }
-      }
+      //foreach (var item in itemsDto)
+      //{
+      //  foreach (var stock in stocks)
+      //  {
+      //    if (stock.ItemId == item.Id)
+      //    {
+      //      item.ActualStock = stock.ActualStock;
+      //    }
+      //  }
+      //}
 
       foreach(var item in itemsDto)
       {
-        item.StockMovements = item.StockMovements.OrderByDescending(sm => sm.DateOfAction.Date).ToList();
+        item.StockMovements = uow.StockMovementsService.OrderStockMovements(item.StockMovements);
       }
       return Ok(new
       {
@@ -62,14 +62,14 @@ namespace Api.Controllers
 
       var itemDto = mapper.Map<ItemDto>(item);
 
-      itemDto.StockMovements = itemDto.StockMovements.OrderBy(sm => sm.DateOfAction.Date).ToList();
+      itemDto.StockMovements = uow.StockMovementsService.OrderStockMovements(itemDto.StockMovements);
 
-      var stock = await uow.StockMovementsService.GetActualStock(id);
+      //var stock = await uow.StockMovementsService.GetActualStock(id);
 
-      if(stock.Any())
-      {
-        itemDto.ActualStock = stock.FirstOrDefault(s => s.ItemId == itemDto.Id).ActualStock;
-      }
+      //if(stock.Any())
+      //{
+      //  itemDto.ActualStock = stock.FirstOrDefault(s => s.ItemId == itemDto.Id).ActualStock;
+      //}
 
       return Ok(new
       {
