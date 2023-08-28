@@ -17,7 +17,7 @@ namespace Api.Data
     }
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
-      configurationBuilder.Properties<DateTime>().HaveColumnType("date");
+      configurationBuilder.Properties<DateTime>().HaveColumnType("datetime");
       configurationBuilder.Properties<string>().HaveMaxLength(150);
       configurationBuilder.Properties<decimal>().HavePrecision(18, 2);
     }

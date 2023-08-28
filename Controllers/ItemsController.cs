@@ -37,6 +37,11 @@ namespace Api.Controllers
           }
         }
       }
+
+      foreach(var item in itemsDto)
+      {
+        item.StockMovements = item.StockMovements.OrderByDescending(sm => sm.DateOfAction.Date).ToList();
+      }
       return Ok(new
       {
         message = "Items list.",
@@ -56,6 +61,8 @@ namespace Api.Controllers
       });
 
       var itemDto = mapper.Map<ItemDto>(item);
+
+      itemDto.StockMovements = itemDto.StockMovements.OrderBy(sm => sm.DateOfAction.Date).ToList();
 
       var stock = await uow.StockMovementsService.GetActualStock(id);
 

@@ -11,6 +11,14 @@ namespace Api.Services.StockMovementsService
     {
     }
 
+    public override async Task<List<StockMovement>> GetAllAsync()
+    {
+      return await context.StockMovements
+        .Include(sm => sm.Item)
+          .ThenInclude(i => i.Unit)
+        .ToListAsync();
+    }
+
     public async Task<List<ItemActualStock>> GetActualStock(int? itemId = null)
     {
       var stocks = await context.ItemStock.FromSqlInterpolated($"EXEC GetStockForItem {itemId}").ToListAsync();

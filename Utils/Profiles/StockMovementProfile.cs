@@ -27,7 +27,24 @@ namespace Api.Utils.Profiles
         opt.MapFrom(src => "confirmado"))
         .ForAllMembers(opts => opts.Condition((src, dest, srcField) => srcField != null));
 
-      CreateMap<StockMovement, StockMovementDto>();
+      CreateMap<StockMovement, StockMovementDto>()
+        .ForMember(dest => dest.DateOfAction, opt =>
+          opt.MapFrom(src => $"{src.DateOfAction.ToLocalTime()}"
+        ));
+
+      CreateMap<StockMovement, StockMovementsDto>()
+        .ForMember(dest => dest.ItemId, opt =>
+          opt.MapFrom(src => src.Item.Id
+        ))
+        .ForMember(dest => dest.Item, opt =>
+          opt.MapFrom(src => $"{src.Item.Name}"
+        ))
+        .ForMember(dest => dest.ItemUnit, opt =>
+          opt.MapFrom(src => $"{src.Item.Unit.Description}"
+        ))
+        .ForMember(dest => dest.DateOfAction, opt =>
+          opt.MapFrom(src => $"{src.DateOfAction.ToLocalTime()}"
+        ));
     }
   }
 }

@@ -26,7 +26,7 @@ namespace Api.Services.ItemsService
     {
       return await context.Items
         .Where(i => i.Id == id)
-        .Include(i => i.StockMovements)
+        .Include(i => i.StockMovements)       
         .Include(i => i.Suppliers)
         .Include(i => i.Unit)
         .Include(i => i.Category)

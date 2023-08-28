@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
-    [ApiController]
-  [Route("/api/items/{itemId:int}/movements")]
+  [ApiController]
+  [Route("/api/items/movements")]
   public class StockMovementsController : ControllerBase
   {
     private readonly IUnitOfWork uow;
@@ -20,11 +20,30 @@ namespace Api.Controllers
     }
 
     [HttpGet]
+    public async Task<ActionResult> Get()
+    {
+      var movements = await uow.StockMovementsService.GetAllAsync();
+
+      var movementsDto = mapper.Map<StockMovementsDto[]>(movements);
+
+      movementsDto = movementsDto.OrderByDescending(sm => sm.DateOfAction.Date).ToArray();
+
+      return Ok(new
+      {
+        message = "Movements list.",
+        data = movementsDto,
+        error = false
+      });
+    }
+
+    [HttpGet("{itemId:int}")]
     public async Task<ActionResult> Get(int itemId)
     {
       var movements = await uow.StockMovementsService.GetMovementsOfItem(itemId);
 
       var itemMovements = mapper.Map<StockMovementDto[]>(movements);
+
+      itemMovements = itemMovements.OrderByDescending(sm => sm.DateOfAction.Date).ToArray();
 
       return Ok(new
       {
@@ -35,7 +54,7 @@ namespace Api.Controllers
     }
 
     [HttpPost]
-    [Route("deposit")]
+    [Route("deposit/{itemId:int}")]
     public async Task<ActionResult> CreateStockForDeposit(int itemId, [FromBody] StockMovementForDeposit stockDeposit)
     {
       var newSm = mapper.Map<StockMovement>(stockDeposit);
@@ -54,7 +73,7 @@ namespace Api.Controllers
     }
 
     [HttpPost]
-    [Route("withdraw")]
+    [Route("withdraw/{itemId:int}")]
     public async Task<ActionResult> CreateStockForWithdraw(int itemId, [FromBody] StockMovementForWithdraw stockWithDraw)
     {
       var stocks = await uow.StockMovementsService.GetActualStock(itemId);
