@@ -1,4 +1,5 @@
 ﻿using Api.Models;
+using Api.Models.Seeding;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -14,6 +15,7 @@ namespace Api.Data
       modelBuilder.Entity<ItemActualStock>().HasNoKey();
       modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
+      InitialSeeding.Seed(modelBuilder);
     }
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
