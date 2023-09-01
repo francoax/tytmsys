@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
-    [ApiController]
+  [ApiController]
   [Route("/api/items")]
   public class ItemsController : ControllerBase
   {
@@ -25,20 +25,20 @@ namespace Api.Controllers
       var items = await uow.ItemsService.GetAllAsync();
       var itemsDto = mapper.Map<ItemDto[]>(items);
 
-      //var stocks = await uow.StockMovementsService.GetActualStock();
+      var stocks = await uow.StockMovementsService.GetActualStock();
 
-      //foreach (var item in itemsDto)
-      //{
-      //  foreach (var stock in stocks)
-      //  {
-      //    if (stock.ItemId == item.Id)
-      //    {
-      //      item.ActualStock = stock.ActualStock;
-      //    }
-      //  }
-      //}
+      foreach (var item in itemsDto)
+      {
+        foreach (var stock in stocks)
+        {
+          if (stock.ItemId == item.Id)
+          {
+            item.ActualStock = stock.ActualStock;
+          }
+        }
+      }
 
-      foreach(var item in itemsDto)
+      foreach (var item in itemsDto)
       {
         item.StockMovements = uow.StockMovementsService.OrderStockMovements(item.StockMovements);
       }
@@ -64,12 +64,12 @@ namespace Api.Controllers
 
       itemDto.StockMovements = uow.StockMovementsService.OrderStockMovements(itemDto.StockMovements);
 
-      //var stock = await uow.StockMovementsService.GetActualStock(id);
+      var stock = await uow.StockMovementsService.GetActualStock(id);
 
-      //if(stock.Any())
-      //{
-      //  itemDto.ActualStock = stock.FirstOrDefault(s => s.ItemId == itemDto.Id).ActualStock;
-      //}
+      if (stock.Any())
+      {
+        itemDto.ActualStock = stock.FirstOrDefault(s => s.ItemId == itemDto.Id).ActualStock;
+      }
 
       return Ok(new
       {
@@ -88,10 +88,12 @@ namespace Api.Controllers
 
       await uow.SaveAsync();
 
+      ItemDto item = mapper.Map<ItemDto>(newItem);
+
       return Ok(new
       {
         message = "Item created.",
-        data = newItem,
+        data = item,
         error = false
       });
     }
