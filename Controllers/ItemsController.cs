@@ -131,7 +131,7 @@ namespace Api.Controllers
 
       return Ok(new
       {
-        message = "Item deleted.",
+        message = "Producto eliminado",
         error = false
       });
     }

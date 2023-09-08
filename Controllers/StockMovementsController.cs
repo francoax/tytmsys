@@ -80,7 +80,7 @@ namespace Api.Controllers
 
       if (!stocks.Any()) return BadRequest(new
       {
-        message = "The item does not contain movements to do a withdraw.",
+        message = "El producto no posee stock al momento.",
         error = true
       });
 
@@ -88,13 +88,13 @@ namespace Api.Controllers
 
       if (actualStock < stockWithDraw.Amount) return BadRequest(new
       {
-        message = "There is not enough stock available.",
+        message = "No hay suficiente stock para retirar dicha cantidad.",
         error = true
       });
 
       if (uow.StockMovementsService.HasPendingMovements(itemId)) return BadRequest(new
       {
-        message = "There are pending withdraw movements to confirm.",
+        message = "Hay retiros pendientes por confirmar. Confirme e intente de nuevo.",
         error = true
       });
 
