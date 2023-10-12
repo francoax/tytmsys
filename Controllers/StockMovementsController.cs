@@ -61,13 +61,20 @@ namespace Api.Controllers
 
       newSm.ItemId = itemId;
 
+      if (uow.StockMovementsService.HasPendingMovements(itemId)) return BadRequest(new
+      {
+        message = "Hay retiros pendientes por confirmar. Confirme e intente de nuevo.",
+        error = true
+      });
+
       uow.StockMovementsService.Add(newSm);
 
       await uow.SaveAsync();
 
-      return Created($"http://localhost:7052/api/items/{itemId}/movements", new
+      return Created($"https://localhost:7052/api/items/{itemId}/movements", new
       {
-        message = "Movement for item added.",
+        message = "Deposito registrado.",
+        data = itemId,
         error = false
       });
     }
@@ -106,9 +113,10 @@ namespace Api.Controllers
 
       await uow.SaveAsync();
 
-      return Created($"http://localhost:7052/api/items/{itemId}/movements", new
+      return Created($"https://localhost:7052/api/items/{itemId}/movements", new
       {
-        message = "Movement for item added.",
+        message = "Retiro registrado.",
+        data = itemId,
         error = false
       });
     }
@@ -137,7 +145,8 @@ namespace Api.Controllers
 
       return Ok(new
       {
-        message = "Movement of withdraw confirmed.",
+        message = "Retiro confirmado.",
+        data = stockToUpdate.ItemId,
         error = false
       });
     }

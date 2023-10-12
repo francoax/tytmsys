@@ -19,12 +19,12 @@ namespace Api.Services.GenericService
 
     public void AddMany(TEntity[] entities) => entitySet.AddRange(entities);
 
-    public async Task<int> Delete(int id) => await entitySet.Where(e => e.Id == id).ExecuteDeleteAsync();
+    public virtual async Task<int> Delete(int id) => await entitySet.Where(e => e.Id == id).ExecuteDeleteAsync();
 
     public virtual async Task<List<TEntity>> GetAllAsync() => await entitySet.ToListAsync();
 
-    public virtual async Task<TEntity?> GetAsync(int id) => await entitySet.Where(e => e.Id == id).FirstOrDefaultAsync();
+    public virtual async Task<TEntity?> GetAsync(int id) => await entitySet.AsNoTracking().Where(e => e.Id == id).FirstOrDefaultAsync();
 
-    public TEntity Update(TEntity entity) => entitySet.Update(entity).Entity;
+    public virtual TEntity Update(TEntity entity) => entitySet.Update(entity).Entity;
   }
 }

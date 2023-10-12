@@ -5,5 +5,6 @@ namespace Api.Services.ItemsService
 {
   public interface IItemService : IGenericService<Item>
   {
+    Item GetReferences(Item item);
   }
 }

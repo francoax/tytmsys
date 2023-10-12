@@ -1,4 +1,5 @@
 ﻿using Api.Data.Uow;
+using Api.DTOs.CategoryDTOs;
 using Api.DTOs.ItemDTOs;
 using Api.Models;
 using AutoMapper;
@@ -88,11 +89,13 @@ namespace Api.Controllers
 
       await uow.SaveAsync();
 
-      ItemDto item = mapper.Map<ItemDto>(newItem);
+      var itemCreated = await uow.ItemsService.GetAsync(newItem.Id);
+
+      ItemDto item = mapper.Map<ItemDto>(itemCreated);
 
       return Ok(new
       {
-        message = "Item created.",
+        message = "Producto creado",
         data = item,
         error = false
       });
@@ -102,36 +105,71 @@ namespace Api.Controllers
     public async Task<ActionResult> Put(int id, [FromBody] ItemForUpdateDto itemModified)
     {
       var itemToUpdate = await uow.ItemsService.GetAsync(id);
-      if (itemToUpdate is null) return NotFound(new
+      if(itemToUpdate == null) {
+        return NotFound(new
+        {
+          message = "Producto no encontrado",
+          data = id,
+          error = true
+        });
+      }
+      try
       {
-        message = "Item not found",
-        error = true
-      });
+        var suppsToRemove = itemToUpdate.Suppliers.Where(supplier => !itemModified.Suppliers.Any(sup => sup.SupplierId == supplier.Id)).ToList();
+        foreach(var sup in suppsToRemove)
+        {
+          itemToUpdate.Suppliers.Remove(sup);
+        }
 
-      mapper.Map(itemToUpdate, itemModified);
+        foreach (var supplier in itemModified.Suppliers)
+        {
+          if (!itemToUpdate.Suppliers.Select(sup => sup.Id).Contains(supplier.SupplierId))
+          {
+            var sup = await uow.SuppliersService.GetAsync(supplier.SupplierId);
+            if (sup is null) { continue; }
 
-      await uow.SaveAsync();
+            itemToUpdate.Suppliers.Add(sup);
+          }
+        }
 
-      return Created($"http://localhost:7052/api/items/{id}", new
+        mapper.Map(itemModified, itemToUpdate);
+
+        uow.ItemsService.Update(itemToUpdate);
+
+        await uow.SaveAsync();
+
+        ItemDto item = mapper.Map<ItemDto>(itemToUpdate);
+
+        item.Category = (await uow.CategoriesService.GetAsync(itemToUpdate.CategoryId)).Name;
+        item.Unit = (await uow.UnitsService.GetAsync(itemToUpdate.UnitId)).Description;
+
+        return Ok(new
+        {
+          message = "Producto actualizado",
+          data = item,
+          error = false
+        });
+      } catch (Exception ex)
       {
-        message = "Item updated",
-        error = false
-      });
+        return BadRequest(ex.Message);
+      }
     }
 
-    [HttpDelete]
+    [HttpDelete("{id:int}")]
     public async Task<ActionResult> Delete(int id)
     {
       var deleted = await uow.ItemsService.Delete(id);
-      if (deleted is 0) return NotFound(new
+      if (deleted == 0) return NotFound(new
       {
-        message = "Item not found",
+        message = "Producto no encontrado",
+        data = id,
         error = true
       });
 
       return Ok(new
       {
         message = "Producto eliminado",
+        data = id,
         error = false
       });
     }
