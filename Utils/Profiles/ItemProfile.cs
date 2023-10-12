@@ -10,6 +10,8 @@ namespace Api.Utils.Profiles
     public ItemProfile()
     {
       CreateMap<ItemForCreationDto, Item>();
+      CreateMap<ItemForUpdateDto, Item>()
+        .ForMember(dest => dest.Suppliers, opt => opt.Ignore());
       CreateMap<ItemSupplierForCreationDto, Supplier>()
         .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.SupplierId));
 

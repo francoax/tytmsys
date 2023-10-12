@@ -1,4 +1,5 @@
 ﻿using Api.Models;
+using Api.Models.Seeding;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -14,10 +15,11 @@ namespace Api.Data
       modelBuilder.Entity<ItemActualStock>().HasNoKey();
       modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
+      InitialSeeding.Seed(modelBuilder);
     }
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
-      configurationBuilder.Properties<DateTime>().HaveColumnType("date");
+      configurationBuilder.Properties<DateTime>().HaveColumnType("datetime");
       configurationBuilder.Properties<string>().HaveMaxLength(150);
       configurationBuilder.Properties<decimal>().HavePrecision(18, 2);
     }

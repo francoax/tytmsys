@@ -9,6 +9,8 @@ namespace Api.Utils.Profiles
     public CategoryProfile() 
     {
       CreateMap<CategoryForCreationDto, Category>();
+
+      CreateMap<Category, CategoryDto>();
     }
   }
 }

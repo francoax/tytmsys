@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
-    [ApiController]
+  [ApiController]
   [Route("/api/categories")]
   public class CategoriesController : ControllerBase
   {

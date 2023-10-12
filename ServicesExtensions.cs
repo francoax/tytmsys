@@ -11,8 +11,12 @@ namespace TyTManagementSystem
     {
       services.AddCors(options =>
       {
-        options.AddPolicy("Cors Policy", builder =>
-        builder.AllowAnyOrigin().AllowCredentials().AllowAnyOrigin().AllowAnyHeader());
+        options.AddDefaultPolicy(policy => { 
+          policy
+            .AllowAnyHeader()
+            .AllowAnyOrigin()
+            .AllowAnyMethod();
+        });
       });
     }
 

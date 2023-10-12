@@ -1,4 +1,5 @@
-﻿using Api.Models;
+﻿using Api.DTOs.StockMovementDTOs;
+using Api.Models;
 using Api.Services.GenericService;
 
 namespace Api.Services.StockMovementsService
@@ -8,5 +9,6 @@ namespace Api.Services.StockMovementsService
     Task<List<StockMovement>> GetMovementsOfItem(int id);
     bool HasPendingMovements(int id);
     Task<List<ItemActualStock>> GetActualStock(int? id = null);
+    List<StockMovementDto> OrderStockMovements(List<StockMovementDto> movements);
   }
 }

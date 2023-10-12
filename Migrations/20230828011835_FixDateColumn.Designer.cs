@@ -4,6 +4,7 @@ using Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(TyTContext))]
-    partial class TyTContextModelSnapshot : ModelSnapshot
+    [Migration("20230828011835_FixDateColumn")]
+    partial class FixDateColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,33 +41,6 @@ namespace Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Fibra Optica"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Accesorios de Rack"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "UTP"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Materiales electricos"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Canalizacion"
-                        });
                 });
 
             modelBuilder.Entity("Api.Models.Item", b =>
@@ -192,18 +168,6 @@ namespace Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Units");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Metros"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Cajas"
-                        });
                 });
 
             modelBuilder.Entity("ItemSupplier", b =>
