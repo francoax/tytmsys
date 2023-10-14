@@ -22,10 +22,13 @@ namespace Api.Controllers
     [HttpGet]
     public async Task<ActionResult> Get()
     {
+      var suppliersFromDb = await uow.SuppliersService.GetAllAsync();
+
+      var suppliers = mapper.Map<SupplierDto[]>(suppliersFromDb);
       return Ok(new
       {
-        message = "Suppliers list.",
-        data = await uow.SuppliersService.GetAllAsync(),
+        message = "Lista de proveedores.",
+        data = suppliers,
         error = false
       });
     }
@@ -40,10 +43,12 @@ namespace Api.Controllers
         error = true
       });
 
+      var supplierDto = mapper.Map<SupplierDto>(supplier);
+
       return Ok(new
       {
         message = $"Supplier {supplier.Name} found.",
-        data = supplier,
+        data = supplierDto,
         error = false
       });
     }
@@ -59,7 +64,7 @@ namespace Api.Controllers
 
       return Ok(new
       {
-        message = "Supplier created.",
+        message = "Proveedor creado.",
         data = newSupplier,
         error = false
       });
@@ -82,7 +87,7 @@ namespace Api.Controllers
 
       return Ok(new
       {
-        message = "Supplier updated",
+        message = "Proveedor actualizado.",
         data = supplierToUpdate,
         error = false
       });
@@ -100,7 +105,7 @@ namespace Api.Controllers
 
       return Ok(new
       {
-        message = "Supplier deleted.",
+        message = "Proveedor eliminado",
         error = false
       });
     }

@@ -23,32 +23,38 @@ namespace Api.Controllers
     [HttpGet]
     public async Task<ActionResult> Get()
     {
-      var items = await uow.ItemsService.GetAllAsync();
-      var itemsDto = mapper.Map<ItemDto[]>(items);
-
-      var stocks = await uow.StockMovementsService.GetActualStock();
-
-      foreach (var item in itemsDto)
+      try
       {
-        foreach (var stock in stocks)
+        var items = await uow.ItemsService.GetAllAsync();
+        var itemsDto = mapper.Map<ItemDto[]>(items);
+
+        var stocks = await uow.StockMovementsService.GetActualStock();
+
+        foreach (var item in itemsDto)
         {
-          if (stock.ItemId == item.Id)
+          foreach (var stock in stocks)
           {
-            item.ActualStock = stock.ActualStock;
+            if (stock.ItemId == item.Id)
+            {
+              item.ActualStock = stock.ActualStock;
+            }
           }
         }
-      }
 
-      foreach (var item in itemsDto)
+        foreach (var item in itemsDto)
+        {
+          item.StockMovements = uow.StockMovementsService.OrderStockMovements(item.StockMovements);
+        }
+        return Ok(new
+        {
+          message = "Items list.",
+          data = itemsDto,
+          error = false
+        });
+      } catch (Exception ex)
       {
-        item.StockMovements = uow.StockMovementsService.OrderStockMovements(item.StockMovements);
+        return BadRequest(ex.Message);
       }
-      return Ok(new
-      {
-        message = "Items list.",
-        data = itemsDto,
-        error = false
-      });
     }
 
     [HttpGet("{id:int}")]
