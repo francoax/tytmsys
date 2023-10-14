@@ -62,10 +62,14 @@ namespace Api.Controllers
 
       await uow.SaveAsync();
 
+      var supplier = await uow.SuppliersService.GetAsync(newSupplier.Id);
+
+      var supplierDto = mapper.Map<SupplierDto>(supplier);
+
       return Ok(new
       {
         message = "Proveedor creado.",
-        data = newSupplier,
+        data = supplierDto,
         error = false
       });
     }
@@ -85,10 +89,12 @@ namespace Api.Controllers
 
       await uow.SaveAsync();
 
+      var supplierDto = mapper.Map<SupplierDto>(supplierToUpdate);
+
       return Ok(new
       {
         message = "Proveedor actualizado.",
-        data = supplierToUpdate,
+        data = supplierDto,
         error = false
       });
     }
